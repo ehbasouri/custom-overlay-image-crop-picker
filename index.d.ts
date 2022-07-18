@@ -152,6 +152,8 @@ declare module "react-native-image-crop-picker" {
          */
         height?: number;
 
+        overlayImage?: 'overlay_front' | 'overlay_right' | 'overlay_left' | 'overlay_back' | 'overlay_bracelet_buckle' | 'overlay_original_box' | 'overlay_original_papers' | 'overlay_damages';
+
         /**
          * When set to true, the image file content will be available as a base64-encoded string in
          * the data property. Hint: To use this string as an image source, use it like:

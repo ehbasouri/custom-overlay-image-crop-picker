@@ -802,6 +802,7 @@ RCT_EXPORT_METHOD(openCropper:(NSDictionary *)options
     
     // we have correct rect, but not correct dimensions
     // so resize image
+
     CGSize desiredImageSize = CGSizeMake([[[self options] objectForKey:@"width"] intValue],
                                          [[[self options] objectForKey:@"height"] intValue]);
     
@@ -870,10 +871,11 @@ RCT_EXPORT_METHOD(openCropper:(NSDictionary *)options
 - (void)cropImage:(UIImage *)image {
     dispatch_async(dispatch_get_main_queue(), ^{
         TOCropViewController *cropVC;
+        NSString *overlayImagePath = [self.options objectForKey:@"overlayImage"];
         if ([[[self options] objectForKey:@"cropperCircleOverlay"] boolValue]) {
-            cropVC = [[TOCropViewController alloc] initWithCroppingStyle:TOCropViewCroppingStyleCircular image:image];
+            cropVC = [[TOCropViewController alloc] initWithCroppingStyle:TOCropViewCroppingStyleCircular image:image overlayImagePath: @""];
         } else {
-            cropVC = [[TOCropViewController alloc] initWithImage:image];
+            cropVC = [[TOCropViewController alloc] initWithCroppingStyle:TOCropViewCroppingStyleDefault image:image overlayImagePath: overlayImagePath];
             CGFloat widthRatio = [[self.options objectForKey:@"width"] floatValue];
             CGFloat heightRatio = [[self.options objectForKey:@"height"] floatValue];
             if (widthRatio > 0 && heightRatio > 0){
@@ -884,7 +886,6 @@ RCT_EXPORT_METHOD(openCropper:(NSDictionary *)options
             cropVC.aspectRatioLockEnabled = ![[self.options objectForKey:@"freeStyleCropEnabled"] boolValue];
             cropVC.resetAspectRatioEnabled = !cropVC.aspectRatioLockEnabled;
         }
-        
         cropVC.title = [[self options] objectForKey:@"cropperToolbarTitle"];
         cropVC.delegate = self;
         

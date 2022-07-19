@@ -94,7 +94,8 @@ ImagePicker.openCamera({
 ImagePicker.openCropper({
   path: 'my-file-path.jpg',
   width: 300,
-  height: 400
+  height: 400,
+  overlayImage: 'overlay_front'
 }).then(image => {
   console.log(image);
 });
